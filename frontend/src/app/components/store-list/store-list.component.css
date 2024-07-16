@@ -1,0 +1,104 @@
+@import "../../../styles.css";
+
+.store-list-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10%;
+}
+.store-edit-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+::ng-deep .p-toolbar-group-start{
+    gap: 20px;
+}
+
+h1 {
+  color: var(--secondaryFontColor);
+}
+.store-name {
+  font-size: 2rem;
+  position: absolute;
+  z-index: 99;
+  left: 20px;
+  top: 20px;
+}
+
+.store-table {
+  border-radius: 20px;
+}
+
+::ng-deep .p-datatable-wrapper {
+  border-radius: 20px 20px 0px 0px;
+}
+::ng-deep .p-datatable-tbody > tr > td,
+::ng-deep .p-datatable-thead > tr > th {
+  text-align: center;
+  justify-content: center;
+}
+
+.store-container {
+  position: relative;
+}
+
+::ng-deep .p-datatable-thead > tr > th {
+  color: var(--secondaryFontColor);
+}
+::ng-deep .p-datatable-thead > tr,
+::ng-deep .p-datatable-tbody > tr{
+
+    border-bottom: 1px solid var(--borderColor);
+}
+
+.store-image {
+  width: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+  opacity: 40%;
+  transition: 300ms;
+}
+
+.store-button-visit {
+  position: absolute;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  translate: -50%;
+}
+
+.store-image:hover {
+  opacity: 100%;
+}
+
+.store-no-result {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+@media only screen and (max-width: 670px) {
+  * {
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  ::ng-deep .p-toolbar {
+    flex-direction: column;
+  }
+  ::ng-deep .store-new-button > .p-button-label{
+    display: none;
+  }
+  ::ng-deep .p-button-icon{
+    margin: 0;
+  }
+  .store-new-button{
+    padding: 15px;
+  }
+  ::ng-deep .p-toolbar-group-start{
+    gap:140px
+  }
+}

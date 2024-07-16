@@ -1,0 +1,134 @@
+@import "../../../styles.css";
+
+::ng-deep .p-dataview-layout-options {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+::ng-deep .p-toolbar-group-end > div{
+    display: flex;
+    gap: 10px;
+}
+
+h2 {
+  color: var(--secondaryFontColor);
+}
+
+.product-buttons,
+.product-buttons-grid {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.product-image {
+  width: 160px;
+  height: 130px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.product-image:hover,
+.product-image-grid:hover {
+  opacity: 50%;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.product-basic-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin: auto;
+  color: var(--secondaryFontColor);
+}
+
+.product-price {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primaryFontColor);
+}
+.product-table {
+  border-radius: 20px 20px 0px 0px;
+  background-color: var(--lessDarkerBackground);
+  overflow: hidden;
+}
+
+.product-buttons-grid {
+  justify-content: center;
+  gap: 15px;
+}
+
+.product-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-image-grid {
+  width: 250px;
+  height: 200px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.col {
+  flex-basis: 33%;
+}
+
+.product-card-grid{
+    margin: 5px;
+    border: 1px solid var(--borderColor);
+    border-radius: 15px;
+}
+
+::ng-deep .p-dialog-header{
+    color: var(--secondaryFontColor);
+}
+::ng-deep .p-dialog-content{
+    color: var(--primaryFontColor);
+    letter-spacing: 1px;
+    text-transform:capitalize;
+}
+@media only screen and (max-width: 1500px) {
+  .col {
+    flex-basis: 48%;
+  }
+}
+@media only screen and (max-width: 670px) {
+  .col {
+    flex-basis: 100%;
+  }
+  ::ng-deep .product-new-button > .p-button-label{
+    display: none;
+  }
+  ::ng-deep .p-button-icon{
+    margin: 0;
+  }
+  .product-new-button{
+    padding: 15px;
+  }
+}

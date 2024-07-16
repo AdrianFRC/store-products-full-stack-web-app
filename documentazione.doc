@@ -1,0 +1,25 @@
+Negozio online e prodotti, assegnato a:
+- Proprietà per l'entità "Negozio": nome, immagine, indirizzo, telefono
+- Proprietà per l'entità "Prodotto": nome, immagine, descrizione, prezzo
+
+Step Creazione nuova app.
+
+1. Step Installa Composer: https://getcomposer.org/download/ segui le istruzioni in base al tuo sistema operativo.
+
+2. Step assicurarsi che extension=zip in php.ini non abbia ";" davanti.
+
+3. Step esegui composer create-project laravel/laravel:^10.0 nomeCartellaBackend - nella cartella del progetto.
+
+4. Modifica .env: APP_NAME=ilNomeDellaTuaApp
+                    DB_CONNECTION=mysql
+                    DB_HOST=127.0.0.1
+                    DB_PORT=3306
+                    DB_DATABASE=nomeDelDbUsatoPerLapp
+                    DB_USERNAME=root (nomeUser se diverso da root)
+                    DB_PASSWORD= (password del db se impostata)
+
+
+Step esecuzione app.
+
+- lato backend - cd nomeCartellaBackend
+               - php artisan serve

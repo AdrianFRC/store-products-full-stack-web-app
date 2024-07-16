@@ -1,0 +1,199 @@
+<div class="card">
+  <div class="flex justify-content-center m-10">
+    <p-sidebar [(visible)]="sidebarVisible">
+      <ng-template [ngIf]="isNotNew">
+        <h3>Modifica: {{ store.name }}</h3>
+      </ng-template>
+      <ng-template [ngIf]="isNew">
+        <h3>Nuovo Negozio: {{ store.name }}</h3>
+      </ng-template>
+      <p-inputGroup>
+        <input pInputText placeholder="Immagine" [(ngModel)]="store.image" />
+        <p-inputGroupAddon>
+          <i class="pi pi-image"></i>
+        </p-inputGroupAddon>
+      </p-inputGroup>
+      <p-inputGroup>
+        <input
+          type="text"
+          pInputText
+          placeholder="Nome"
+          [(ngModel)]="store.name"
+        />
+        <p-inputGroupAddon>
+          <i class="pi pi-user"></i>
+        </p-inputGroupAddon>
+      </p-inputGroup>
+      <p-inputGroup>
+        <input
+          type="text"
+          pInputText
+          placeholder="Indirizzo"
+          [(ngModel)]="store.address"
+        />
+        <p-inputGroupAddon><i class="pi pi-map-marker"></i></p-inputGroupAddon>
+      </p-inputGroup>
+      <p-inputGroup>
+        <input
+          type="text"
+          pInputText
+          placeholder="Numero di telefono"
+          [(ngModel)]="store.phoneNumber"
+        />
+        <p-inputGroupAddon><i class="pi pi-phone"></i></p-inputGroupAddon>
+      </p-inputGroup>
+      <div class="store-sidebar-buttons">
+        <ng-template [ngIf]="isNew">
+          <button
+            pButton
+            label="Salva"
+            [raised]="true"
+            (click)="newStore()"
+          ></button>
+        </ng-template>
+        <ng-template [ngIf]="isNotNew">
+          <button
+            pButton
+            label="Salva"
+            [raised]="true"
+            (click)="editStore(store)"
+          ></button>
+        </ng-template>
+        <button
+          pButton
+          type="button"
+          label="Annulla"
+          [raised]="true"
+          (click)="closeEditStore()"
+        ></button>
+      </div>
+    </p-sidebar>
+  </div>
+  <h1 class="store-header-title">PurpleLink Online</h1>
+  <p-toolbar
+    styleClass="bg-gray-900 shadow-2"
+    [style]="{ 'border-radius': '1rem', 'margin-bottom': '3rem' }"
+  >
+    <ng-template pTemplate="end">
+      <div class="p-toolbar-group-center">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            placeholder="Search"
+            (input)="filterStore($event)"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="start">
+      <img [src]="logo" alt="LOGO" [style]="{ width: '4rem' }" />
+      <div class="flex align-items-center gap-2 store-button-new">
+        <button
+          pButton
+          class="store-new-button"
+          type="button"
+          label="Nuovo Negozio"
+          icon="pi pi-plus"
+          [raised]="true"
+          (click)="showNewStore()"
+        ></button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+  <ng-template [ngIf]="hidden"
+    ><div class="store-no-result">
+      Nessun negozio corrisponde alla ricerca.
+    </div></ng-template
+  >
+  <p-carousel
+    [value]="stores"
+    [numVisible]="1"
+    [numScroll]="1"
+    [circular]="true"
+    autoplayInterval="3000"
+    [style]="{ 'margin-inline': '-25px' }"
+  >
+    <ng-template let-store pTemplate="item">
+      <div class="store-container">
+        <div class="">
+          <div class="">
+            <img
+              src="{{ store.image }}"
+              [alt]="store.name"
+              class="store-image"
+            />
+            <div class="flex align-items-center gap-2 store-button-visit">
+              <button
+                pButton
+                type="button"
+                [raised]="true"
+                label="Visita Negozio"
+                (click)="viewStore(store)"
+              ></button>
+            </div>
+          </div>
+        </div>
+        <div class="store-name">
+          {{ store.name }}
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+  <p-table [value]="stores" class="store-table" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th>Nome</th>
+        <th>Indirizzo</th>
+        <th>Numero di telefono</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-store>
+      <tr>
+        <td>
+          <img
+            src="{{ store.image }}"
+            alt="{{ store.name }}"
+            class="store-list-avatar"
+          />
+        </td>
+        <td>{{ store.name }}</td>
+        <td>{{ store.address }}</td>
+        <td>{{ store.phoneNumber }}</td>
+        <td class="store-edit-buttons">
+          <button
+            pButton
+            type="button"
+            label=""
+            icon="pi pi-pencil"
+            [raised]="true"
+            (click)="showEditStore(store)"
+          ></button>
+          <button
+            pButton
+            type="button"
+            label=""
+            icon="pi pi-eye"
+            [raised]="true"
+            (click)="viewStore(store)"
+          ></button>
+          <div>
+            <p-toast />
+            <p-confirmPopup />
+            <button
+              pButton
+              type="button"
+              label=""
+              icon="pi pi-trash"
+              [raised]="true"
+              [outlined]="true"
+              (click)="confirm(store, $event)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

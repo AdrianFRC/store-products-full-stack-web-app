@@ -1,0 +1,259 @@
+<div class="card">
+  <h2 class="store-header-title">{{ store.name }}</h2>
+  <h3>Vetrina Prodotti</h3>
+  <p-dialog
+    header="{{ product.name }}"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '50rem' }"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  >
+    <p class="mb-5">{{ product.description }}</p>
+  </p-dialog>
+  <p-sidebar [(visible)]="sidebarVisible">
+    <ng-template [ngIf]="isNotNew">
+      <h2>{{ store.name }}</h2>
+      <h3>Modifica: {{ product.name }}</h3>
+    </ng-template>
+    <ng-template [ngIf]="isNew">
+      <h2>{{ store.name }}</h2>
+      <h3>Nuovo Prodotto: {{ product.name }}</h3>
+    </ng-template>
+    <p-inputGroup>
+      <input pInputText placeholder="Immagine" [(ngModel)]="product.image" />
+      <p-inputGroupAddon>
+        <i class="pi pi-image"></i>
+      </p-inputGroupAddon>
+    </p-inputGroup>
+    <p-inputGroup>
+      <input
+        type="text"
+        pInputText
+        placeholder="Nome"
+        [(ngModel)]="product.name"
+      />
+      <p-inputGroupAddon>
+        <i class="pi pi-user"></i>
+      </p-inputGroupAddon>
+    </p-inputGroup>
+    <p-inputGroup>
+      <input
+        type="text"
+        pInputText
+        placeholder="Prezzo"
+        [(ngModel)]="product.price"
+      />
+      <p-inputGroupAddon><i class="pi pi-euro"></i></p-inputGroupAddon>
+    </p-inputGroup>
+    <p-inputGroup>
+      <input
+        type="text"
+        pInputText
+        placeholder="SKU"
+        [(ngModel)]="product.sku"
+      />
+      <p-inputGroupAddon><i class="pi pi-barcode"></i></p-inputGroupAddon>
+    </p-inputGroup>
+    <p-inputGroup>
+      <textarea
+        rows="3"
+        pInputTextarea
+        placeholder="Descrizione"
+        [(ngModel)]="product.description"
+      >
+      </textarea>
+      <p-inputGroupAddon><i class="pi pi-info"></i></p-inputGroupAddon>
+    </p-inputGroup>
+    <div class="store-sidebar-buttons">
+      <ng-template [ngIf]="isNew">
+        <button
+          pButton
+          label="Salva"
+          [raised]="true"
+          (click)="newProduct()"
+        ></button>
+      </ng-template>
+      <ng-template [ngIf]="isNotNew">
+        <button
+          pButton
+          label="Salva"
+          [raised]="true"
+          (click)="editProduct(product)"
+        ></button>
+      </ng-template>
+      <button
+        pButton
+        type="button"
+        label="Annulla"
+        [raised]="true"
+        (click)="closeEditProduct()"
+      ></button>
+    </div>
+  </p-sidebar>
+  <p-toolbar
+    styleClass="bg-gray-900 shadow-2"
+    [style]="{ 'border-radius': '1rem', 'margin-bottom': '3rem' }"
+  >
+    <ng-template pTemplate="start">
+      <img [src]="logo" alt="LOGO" [style]="{ width: '4rem' }" />
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="flex align-items-center gap-2 store-button-new">
+        <button
+          class="product-new-button"
+          pButton
+          type="button"
+          label="Nuovo Prodotto"
+          icon="pi pi-plus"
+          [raised]="true"
+          (click)="showNewProduct()"
+        ></button>
+        <button
+          class="product-new-button"
+          pButton
+          type="button"
+          label="Indietro"
+          icon="pi pi-arrow-left"
+          [raised]="true"
+          (click)="goToStorePage()"
+        ></button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+  <div class="product-table">
+    <p-dataView
+      #dv
+      [value]="products"
+      [paginator]="true"
+      [rows]="10"
+      [loading]="loading"
+    >
+      <ng-template pTemplate="header">
+        <div class="flex justify-content-end">
+          <p-dataViewLayoutOptions />
+        </div>
+      </ng-template>
+      <ng-template pTemplate="list" let-products>
+        <div class="grid grid-nogutter">
+          <div
+            class="col-12"
+            *ngFor="let item of products; let first = first"
+            class="col-12"
+          >
+            <div
+              class="product-card p-4 gap-3"
+              [ngClass]="{ 'border-top-1 surface-border': !first }"
+            >
+              <div class="relative">
+                <img
+                  class="product-image"
+                  [src]="item.image"
+                  [alt]="item.name"
+                  (click)="showDialog(item)"
+                />
+              </div>
+              <div class="product-info gap-4">
+                <div
+                  class="flex flex-row md:flex-column justify-content-between align-items-start gap-2"
+                >
+                  <div class="product-basic-info">
+                    <div class="product-name">
+                      {{ item.name }}
+                    </div>
+                    <div class="product-price">
+                      {{ "$" + item.price }}
+                    </div>
+                  </div>
+                  <div
+                    class="surface-100 p-1"
+                    style="border-radius: 30px"
+                  ></div>
+                </div>
+                <div
+                  class="flex flex-row-reverse md:flex-row gap-2 product-buttons"
+                >
+                  <div>
+                    <p-toast />
+                    <p-confirmPopup />
+                    <p-button
+                      icon="pi pi-trash"
+                      [outlined]="true"
+                      (click)="confirm(item, $event)"
+                    />
+                  </div>
+                  <p-button
+                    icon="pi pi-eye"
+                    [raised]="true"
+                    (click)="showDialog(item)"
+                  ></p-button>
+                  <p-button
+                    icon="pi pi-pencil"
+                    (click)="showEditProduct(item)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template let-product pTemplate="grid" let-products>
+        <div class="grid grid-nogutter flex-container">
+          <div class="col" *ngFor="let product of products">
+            <div
+              class="p-4 border-1 surface-border surface-card border-round flex flex-column product-card-grid"
+            >
+              <div>
+                <div
+                  class="relative mx-auto"
+                  [style]="{ 'text-align': 'center' }"
+                >
+                  <img
+                    class="product-image-grid"
+                    [src]="product.image"
+                    [alt]="product.name"
+                    style="max-width: 300px"
+                    (click)="showDialog(product)"
+                  />
+                </div>
+              </div>
+              <div class="pt-4">
+                <div class="gap-2">
+                  <div class="product-grid">
+                    <div class="product-name">
+                      {{ product.name }}
+                    </div>
+                    <div class="product-price">
+                      {{ "$" + product.price }}
+                    </div>
+                  </div>
+                </div>
+                <div class="gap-4 mt-4">
+                  <div class="product-buttons-grid">
+                    <p-button
+                      icon="pi pi-pencil"
+                      (click)="showEditProduct(product)"
+                    />
+                    <p-button
+                      icon="pi pi-eye"
+                      [raised]="true"
+                      (click)="showDialog(product)"
+                    />
+                    <div>
+                      <p-toast />
+                      <p-confirmPopup />
+                      <p-button
+                        icon="pi pi-trash"
+                        [outlined]="true"
+                        (click)="confirm(product, $event)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+</div>

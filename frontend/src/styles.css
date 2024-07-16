@@ -1,0 +1,67 @@
+@import "primeng/resources/themes/lara-dark-purple/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+@layer reset, primeng;
+
+:root {
+  --darkBackround: #141625;
+  --lessDarkerBackground: #1f213a;
+  --primaryFontColor: #c9ccdd;
+  --secondaryFontColor: #969bc0;
+  --detailsColor: #a78bfa;
+  --borderColor: #4f5161;
+}
+
+html,
+body {
+  background-color: var(--darkBackround);
+  color: var(--primaryFontColor);
+}
+
+button {
+  border-radius: 30px;
+}
+
+.card {
+  margin-inline: 20%;
+  margin-bottom: 10%;
+  background-color: var(--darkBackround);
+  color: var(--primaryFontColor);
+  border: none !important;
+}
+
+.store-header-title {
+  margin-top: 20px;
+}
+
+.store-sidebar-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+::ng-deep .p-sidebar {
+  width: 50%;
+}
+
+@media only screen and (max-width: 1300px) {
+  .card {
+    margin-inline: 12%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .card {
+    margin-inline: 5%;
+  }
+}
+@media only screen and (max-width: 670px) {
+  .col {
+    flex-basis: 100%;
+  }
+  ::ng-deep .p-sidebar {
+    width: 100%;
+  }
+}
